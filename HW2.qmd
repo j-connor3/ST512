@@ -1,0 +1,12 @@
+---
+title: "Homework 2"
+author: "Jackson Connor"
+format: html
+editor: visual
+---
+
+## Packages
+
+```{r}
+library(tidyverse)
+```
