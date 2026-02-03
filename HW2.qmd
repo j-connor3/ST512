@@ -8,5 +8,149 @@ editor: visual
 ## Packages
 
 ```{r}
+#| warning: false
 library(tidyverse)
+library(multcomp)
+library(emmeans)
 ```
+
+## Problem 1
+
+A pharmaceutical manufacturer wants to investigate the bioactivity of a new drug. A completely randomized single-factor experiment was conducted with three dosage levels, and the following results were obtained.
+
+Complete the ANOVA Table: ANOVA Table
+
+|            | df  | SS    | MS  | F-value | P-value |
+|------------|-----|-------|-----|---------|---------|
+| Bet_Dosage |     | 450.7 |     |         |         |
+| Error      |     |       |     |         |         |
+| Total      |     | 738.9 |     |         |         |
+
+```         
+Is there evidence to indicate that dosage level affects bioactivity? 
+
+Compute a 95 percent interval estimate of the mean of dosage level is 30g. 
+
+Compute a 99 percent interval estimate of the mean difference between dosages levels 20g and 40g.
+
+Compute simultaneous 95% CIs for the difference in means for dosage levels 20g and 40g, based on Tukey’s, Bonferroni’s and Scheffe’s Methods:
+```
+
+Note: Q=q\_((1-α), a,(n_T-a))/√2=q\_(0.95, 4,(3\*4-3))/√2=3.95/√2=2.79
+
+```         
+Use Tukey’s HSD to compare pairs of treatment means. 
+```
+
+## Problem 2
+
+The tensile strength of Portland cement is being studied. Four different mixing techniques can be used economically. A completely randomized experiment was conducted, and the following data were collected.
+
+You are given the following information:
+
+Y ̅*(1.)=2971.00,s(Y ̅*(1.) )=56.65 and MSE=12825.7
+
+Y ̅*(2.)=3156.25,s(Y ̅*(2.) )=56.65
+
+Y ̅*(3.)=2933.75,s(Y ̅*(3.) )=56.65
+
+Y ̅*(4.)=2666.25,s(Y ̅*(4.) )=56.65
+
+**a.** Test the hypothesis that mixing techniques affect the strength of the cement.
+
+```{r}
+Tensile_Strength=c(3129,3000,2865,2890,3200,3300,2975,3150,2800,2900,2985,3050,2600,2700,2600,2765)
+
+Mixing_Technique=c(1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4)
+
+data<-data.frame(Tensile_Strength,Mixing_Technique)
+
+str(data)
+
+Mixing_Technique = factor(Mixing_Technique)
+
+model <- aov(Tensile_Strength ~ Mixing_Technique)
+
+summary(model)
+```
+
+
+**b.** Find a 95 percent confidence interval on the mean tensile strength of the Portland cement produced by mixing technique 3.
+
+$\bar{y_3}$ = 2933.7, s($\bar{y_3}$) = 56.65
+
+```{r}
+qt(0.975, 12)
+```
+
+
+$2933.7 \pm (2.179*56.65)$ = **(2810.26, 3057.14)**
+
+**c.** Find a 95 percent confidence interval on the difference in means for techniques 1 and 3 & 3 and 4.
+
+$L = \frac{\mu_1 + \mu_3}{2}-\frac{\mu_3+\mu_4}{2} = (\frac{1}{2})\mu_1 + (0)\mu_2 + (\frac{1}{2})(\frac{-1}{2})\mu_3 + (\frac{-1}{2})\mu_4$
+
+$\hat{L} = \frac{\hat{y_1}+\hat{y_3}}{2}-\frac{\hat{y_3}+\hat{y_4}}{2} = \frac{{2971}+{2933.75}}{2}-\frac{{2933.75}+{2666.25}}{2}$ = 152.375
+
+$\overset{4}{\sum}_{i=1}\frac{c^2_i}{n_i} = {\frac{\frac{1}{2}^2}{4}} + {\frac{\frac{-1}{4}^2}{4}} + {\frac{\frac{-1}{2}^2}{4}}$ = 
+
+**d.** Compute simultaneous 95% CIs for the difference in means for techniques 1 and 3, based on Tukey’s, Bonferroni’s and Scheffe’s Methods:
+
+```{r}
+modelemm <- emmeans(model, "Mixing_Technique")
+
+pairs(modelemm, infer=c(T,T), level=0.95, adjust="tukey")
+
+```
+(-200.5, 275.0)
+
+```{r}
+modelemm <- emmeans(model, "Mixing_Technique")
+
+pairs(modelemm, infer=c(T,T), level=0.95, adjust="bonferroni")
+
+```
+(-215.2, 289.7)
+
+```{r}
+
+modelemm <- emmeans(model, "Mixing_Technique")
+
+pairs(modelemm, infer=c(T,T), level=0.95, adjust="scheffe")
+```
+(-221.88, 296.4)
+
+**e.** Compute Bonferroni’s Minimum Significant Difference
+
+$t_{(1-\frac{\alpha}{2*g}), df_{error}}$ = Bonferroni's CV
+
+g = $\frac{a(a-1)}{2} = \frac{4(3)}{2}$ = 6
+$1-\frac{0.05}{2*6}$ = 1 - .0042 = .9958
+
+
+```{r}
+qt(.9958, 12)
+```
+$B_{CV} * SE$ = 3.14839 * 80.1 = 252.186
+
+**f.** Compute Tukey’s Honest Significant Difference
+
+$qtukey_{1-\alpha, df_{btwn}, df_{error}}$ = Tukey's CV
+
+```{r}
+qtukey(0.95, 3, 12)
+```
+$3.772929 \div \sqrt{2}$ = 2.668
+
+$Tukey_{CV} * SE$ = 2.668 * 80.1 = 213.696
+
+**g.** Compute Scheffe’s Minimum Significant Difference
+
+$\sqrt{(a-1)f_{(1-\alpha),(a-1),df_{error}}}$ = Scheffe's CV
+
+```{r}
+qf(0.95,3,12)
+```
+S = $\sqrt{3*3.490295}$ = 3.236
+
+$S_{CV} * SE$ 3.236 * 80.1 = 259.194
