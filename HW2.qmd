@@ -278,3 +278,30 @@ qf(0.95,3,12)
 S = $\sqrt{3*3.490295}$ = 3.236
 
 $S_{CV} * \sqrt{\hat{V}(\hat{L})$ 3.236 \* 80.08 = 259.130
+
+## Problem 3
+
+A study is conducted to compare 4 menus in terms of numbers of calories ordered by restaurant customers (in 100s of calories). The treatments (menus) are (consider them increasing in order of information provided):   
+1) No Calories Reported     2) Calories Reported      3) Rank-Ordered Calories   4) Color-Coded Calories
+ The sample sizes are all based on samples of r = 20 customers per menu. The sample means and estimated variance are:
+ ¯Y_(1•)=17.6 ¯Y_(2•)=16.8 ¯Y_(3•)=16.0 ¯Y_(4•)=14.4 ¯Y_(••)=16.2
+ s^2="MSE "=196.0.
+Give 3 orthogonal contrasts, and their estimates and estimated standard errors
+Contrast 1: Menu 1 vs Menus {2, 3, 4}
+Contrast 2: Menu 2 vs Menus {3, 4} 
+Contrast 3: Menu 3 vs Menu 4
+
+$L_1 = (3)\mu_1 - \mu_2 - \mu_3 - \mu_4$
+
+$\hat{L}_1 = (3)17.6 -(16.8 + 16 + 14.4)$ = 5.6
+
+$sd(\hat{L}_1) = \sqrt{196 * (\frac{3^2}{20}+\frac{1^2}{20}+\frac{1^2}{20}+\frac{1^2}{20})}$ = 10.844
+
+$L_2 = (0)\mu_1 + (2)\mu_2 + \mu_3 + \mu_4$
+$\hat{L}_2 = (0)17.6 + (2)16.8 - (16 + 14.4)$ = 3.2
+$sd(\hat{L}_2) = \sqrt{196 * (\frac{2^2}{20} +\frac{1^2}{20} +\frac{1^2}{20})}$ = 7.668
+
+$L_3 = \mu_3 - \mu_4$
+$\hat{L}_3 = 16 - 14.4$ = 1.6
+$sd(\hat{L}_3) = \sqrt{196 * (\frac{1^2}{20} +\frac{1^2}{20})}$ = 4.427
+

@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Jackson Connor">
+
+<title>Homework 2</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="HW2_files/libs/clipboard/clipboard.min.js"></script>
+<script src="HW2_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="HW2_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="HW2_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="HW2_files/libs/quarto-html/popper.min.js"></script>
+<script src="HW2_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="HW2_files/libs/quarto-html/anchor.min.js"></script>
+<link href="HW2_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="HW2_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="HW2_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="HW2_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="HW2_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Homework 2</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Jackson Connor </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="packages" class="level2">
+<h2 class="anchored" data-anchor-id="packages">Packages</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(multcomp)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="problem-1" class="level2">
+<h2 class="anchored" data-anchor-id="problem-1">Problem 1</h2>
+<p>A pharmaceutical manufacturer wants to investigate the bioactivity of a new drug. A completely randomized single-factor experiment was conducted with three dosage levels, and the following results were obtained.</p>
+<p>Complete the ANOVA Table: ANOVA Table</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>df</th>
+<th>SS</th>
+<th>MS</th>
+<th>F-value</th>
+<th>P-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Bet_Dosage</td>
+<td>2</td>
+<td>450.7</td>
+<td>225.33</td>
+<td>7.036</td>
+<td>0.0145</td>
+</tr>
+<tr class="even">
+<td>Error</td>
+<td>9</td>
+<td>288.2</td>
+<td>32.03</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td>11</td>
+<td>738.9</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Observations<span class="ot">=</span><span class="fu">c</span>(<span class="dv">24</span>,<span class="dv">28</span>,<span class="dv">37</span>,<span class="dv">30</span>,<span class="dv">37</span>,<span class="dv">44</span>,<span class="dv">31</span>,<span class="dv">35</span>,<span class="dv">42</span>,<span class="dv">47</span>,<span class="dv">52</span>,<span class="dv">38</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Dosage<span class="ot">=</span><span class="fu">c</span>(<span class="dv">20</span>,<span class="dv">20</span>,<span class="dv">20</span>,<span class="dv">20</span>,<span class="dv">30</span>,<span class="dv">30</span>,<span class="dv">30</span>,<span class="dv">30</span>,<span class="dv">40</span>,<span class="dv">40</span>,<span class="dv">40</span>,<span class="dv">40</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>data1<span class="ot">&lt;-</span><span class="fu">data.frame</span>(Observations, Dosage)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   12 obs. of  2 variables:
+ $ Observations: num  24 28 37 30 37 44 31 35 42 47 ...
+ $ Dosage      : num  20 20 20 20 30 30 30 30 40 40 ...</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Dosage <span class="ot">=</span> <span class="fu">factor</span>(Dosage)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">aov</span>(Observations <span class="sc">~</span> Dosage)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)  
+Dosage       2  450.7  225.33   7.036 0.0145 *
+Residuals    9  288.2   32.03                 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p><strong>a.</strong> Is there evidence to indicate that dosage level affects bioactivity?</p>
+<p>A p-value of 0.0145 &lt; 0.05 supports the claim that dosage level affects bioactivity</p>
+<p><strong>b.</strong> Compute a 95 percent interval estimate of the mean of dosage level is 30g.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>data1 <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Dosage) <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Observations))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  Dosage  mean
+   &lt;dbl&gt; &lt;dbl&gt;
+1     20  29.8
+2     30  36.8
+3     40  44.8</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(\hat{L} = \frac{37+44+31+35}{4}\)</span> = 36.75</p>
+<p><span class="math inline">\(\hat{V}(\hat{L}) = \sqrt{MSE*\sum\limits_{i=1}^a\frac{C^2_i}{n_i}}\)</span></p>
+<p><span class="math inline">\(\sum\limits_{i=1}^a\frac{C^2_i}{n_i} = \frac{1}{4}\)</span></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.975</span>,<span class="dv">9</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.262157</code></pre>
+</div>
+</div>
+<p>36.75 <span class="math inline">\(\pm (CV * \sqrt{MSE*\sum\limits_{i=1}^a\frac{C^2_i}{n_i}}) = 36.75 \pm (2.262 * \sqrt{32*\frac{1}{4}})\)</span> = 36.75 <span class="math inline">\(\pm\)</span> 6.3979</p>
+<p>(30.352, 43.148)</p>
+<p><strong>c.</strong> Compute a 99 percent interval estimate of the mean difference between dosages levels 20g and 40g.</p>
+<p><span class="math inline">\(\hat{L} = \frac{24+28+37+30}{4}-\frac{42+47+52+38}{4} = 29.75-44.75 = -15\)</span></p>
+<p><span class="math inline">\(\sum\limits_{i=1}^a\frac{C^2_i}{n_i} = \frac{1}{4}+\frac{1}{4} = \frac{2}{4}\)</span></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.995</span>,<span class="dv">9</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.249836</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(-15 \pm (3.2498*\sqrt{32*\frac{2}{4}}) = -15 \pm 12.9992\)</span></p>
+<p>(-27.9992, -2.0008)</p>
+<p><strong>d.</strong> Compute simultaneous 95% CIs for the difference in means for dosage levels 20g and 40g, based on Tukey’s, Bonferroni’s and Scheffe’s Methods:</p>
+<p><strong>Bonferroni</strong></p>
+<p><span class="math inline">\(t_{(1-\frac{\alpha}{2*g}), df_{error}}\)</span> = Bonferroni’s CV</p>
+<p>g = <span class="math inline">\(\frac{a(a-1)}{2} = \frac{3(2)}{2}\)</span> = 3</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="dv">1</span><span class="sc">-</span>(<span class="fl">0.05</span><span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span><span class="dv">3</span>)), <span class="dv">9</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.933324</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(\hat{L}\pm B*\sqrt{\hat{V}(\hat{L})}\)</span> = -15 <span class="math inline">\(\pm (2.933*\sqrt{16}) = -15 \pm 11.732\)</span></p>
+<p>(-26.732, -3.268)</p>
+<p><strong>Tukey’s</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qtukey</span>(<span class="fl">0.95</span>, <span class="dv">3</span>, <span class="dv">9</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.948492</code></pre>
+</div>
+</div>
+<p>Q = 3.948/<span class="math inline">\(\sqrt{2}\)</span> = 2.792</p>
+<p><span class="math inline">\(HSD = Q*\sqrt{MSE(\frac{1}{n_i}+\frac{1}{n_j})} = 2.792 * \sqrt{16} = 11.167\)</span></p>
+<p><span class="math inline">\(\hat{L}\pm HSD = -15 \pm 11.167\)</span></p>
+<p>(-26.167, -3.833)</p>
+<p><strong>Scheffe</strong></p>
+<p><span class="math inline">\(\sqrt{(a-1)f_{(1-\alpha),(a-1),df_{error}}}\)</span> = Scheffe’s CV</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qf</span>(<span class="fl">0.95</span>, <span class="dv">2</span>, <span class="dv">9</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4.256495</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(\sqrt{2*4.256}\)</span> = 2.918</p>
+<p><span class="math inline">\(\hat{L} \pm S * \sqrt{\hat{V}(\hat{L})} = -15 \pm (2.918 * \sqrt{16}) = -15 \pm 11.672\)</span></p>
+<p>(-26.672, -3.328)</p>
+<p><strong>e.</strong> Use Tukey’s HSD to compare pairs of treatment means.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 38%">
+<col style="width: 17%">
+<col style="width: 44%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Difference</th>
+<th>Significant (&gt;HSD of 11.167)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>20g-30g = |29.75-36.75|</td>
+<td>7</td>
+<td>N</td>
+</tr>
+<tr class="even">
+<td>20g-40g = |29.75-44.75|</td>
+<td>15</td>
+<td>Y</td>
+</tr>
+<tr class="odd">
+<td>30g-40g = |36.75-44.75|</td>
+<td>8</td>
+<td>N</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="problem-2" class="level2">
+<h2 class="anchored" data-anchor-id="problem-2">Problem 2</h2>
+<p>The tensile strength of Portland cement is being studied. Four different mixing techniques can be used economically. A completely randomized experiment was conducted, and the following data were collected.</p>
+<p>You are given the following information:</p>
+<p>Y ̅<em>(1.)=2971.00,s(Y ̅</em>(1.) )=56.65 and MSE=12825.7</p>
+<p>Y ̅<em>(2.)=3156.25,s(Y ̅</em>(2.) )=56.65</p>
+<p>Y ̅<em>(3.)=2933.75,s(Y ̅</em>(3.) )=56.65</p>
+<p>Y ̅<em>(4.)=2666.25,s(Y ̅</em>(4.) )=56.65</p>
+<p><strong>a.</strong> Test the hypothesis that mixing techniques affect the strength of the cement.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Tensile_Strength<span class="ot">=</span><span class="fu">c</span>(<span class="dv">3129</span>,<span class="dv">3000</span>,<span class="dv">2865</span>,<span class="dv">2890</span>,<span class="dv">3200</span>,<span class="dv">3300</span>,<span class="dv">2975</span>,<span class="dv">3150</span>,<span class="dv">2800</span>,<span class="dv">2900</span>,<span class="dv">2985</span>,<span class="dv">3050</span>,<span class="dv">2600</span>,<span class="dv">2700</span>,<span class="dv">2600</span>,<span class="dv">2765</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>Mixing_Technique<span class="ot">=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">4</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>data<span class="ot">&lt;-</span><span class="fu">data.frame</span>(Tensile_Strength,Mixing_Technique)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   16 obs. of  2 variables:
+ $ Tensile_Strength: num  3129 3000 2865 2890 3200 ...
+ $ Mixing_Technique: num  1 1 1 1 2 2 2 2 3 3 ...</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Mixing_Technique <span class="ot">=</span> <span class="fu">factor</span>(Mixing_Technique)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">aov</span>(Tensile_Strength <span class="sc">~</span> Mixing_Technique)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+Mixing_Technique  3 489740  163247   12.73 0.000489 ***
+Residuals        12 153908   12826                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p><strong>b.</strong> Find a 95 percent confidence interval on the mean tensile strength of the Portland cement produced by mixing technique 3.</p>
+<p><span class="math inline">\(\bar{y_3}\)</span> = 2933.7, s(<span class="math inline">\(\bar{y_3}\)</span>) = 56.65</p>
+<p><span class="math inline">\(\hat{V}(\hat{L}) = \sqrt{MSE*\sum\limits_{i=1}^a\frac{C^2_i}{n_i}} = \sqrt{12825.7*\frac{1}{4}}\)</span> = 56.625</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="dv">12</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.178813</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(2933.7 \pm (2.179*56.625)\)</span> = <strong>(2810.31, 3057.09)</strong></p>
+<p><strong>c.</strong> Find a 95 percent confidence interval on the difference in means for techniques 1 and 3 &amp; 3 and 4.</p>
+<p><span class="math inline">\(L = \frac{\mu_1 + \mu_3}{2}-\frac{\mu_3+\mu_4}{2} = (\frac{1}{2})\mu_1 + (0)\mu_2 + (\frac{1}{2})\mu_3 + (\frac{-1}{2})\mu_3 + (\frac{-1}{2})\mu_4\)</span></p>
+<p><span class="math inline">\(\hat{L} = \frac{\hat{y_1}+\hat{y_3}}{2}-\frac{\hat{y_3}+\hat{y_4}}{2} = \frac{{2971}+{2933.75}}{2}-\frac{{2933.75}+{2666.25}}{2}\)</span> = 152.375</p>
+<p><span class="math inline">\(\sum\limits^4_{i=1}\frac{c^2_i}{n_i} = {\frac{\frac{1}{2}^2}{4}} + {\frac{\frac{1}{2}^2}{4}} + {\frac{\frac{-1}{2}^2}{4}} + {\frac{\frac{-1}{2}^2}{4}}\)</span> = 0.25</p>
+<p><span class="math inline">\(\hat{V}(\hat{L}) = mse * \sum\limits^4_{i=1}\frac{c^2_i}{n_i}\)</span> = 12825.7 * 0.25 = 3206.425</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.975</span>,<span class="dv">12</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.178813</code></pre>
+</div>
+</div>
+<p>152.375 <span class="math inline">\(\pm (2.179 * \sqrt{3206.425})\)</span> = 152.375 <span class="math inline">\(\pm\)</span> 123.387</p>
+<p>(28.988, 275.76)</p>
+<p><strong>d.</strong> Compute simultaneous 95% CIs for the difference in means for techniques 1 and 3, based on Tukey’s, Bonferroni’s and Scheffe’s Methods:</p>
+<p>$ = - = 2971.00 - 2933.75 = 37.25</p>
+<p><span class="math inline">\(\hat{V}(\hat{L}) = mse * \sum\limits^4_{i=1}\frac{c^2_i}{n_i} = 12825.7 * (\frac{1}{4}+\frac{1}{4})\)</span> = 6412.85</p>
+<p><strong>Tukey’s</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qtukey</span>(<span class="fl">0.95</span>, <span class="dv">3</span>, <span class="dv">12</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.772929</code></pre>
+</div>
+</div>
+<p>Q = 3.773/<span class="math inline">\(\sqrt{2}\)</span> 2.668</p>
+<p><span class="math inline">\(HSD = Q*\sqrt{MSE(\frac{1}{n_i}+\frac{1}{n_j})}\)</span> = 2.668 * <span class="math inline">\(\sqrt{6412.85}\)</span> = 213.647</p>
+<p>37.25 <span class="math inline">\(\pm\)</span> 213.647</p>
+<p>(-176.397, 250.897)</p>
+<p><strong>Bonferroni’s</strong></p>
+<p><span class="math inline">\(t_{(1-\frac{\alpha}{2*g}), df_{error}}\)</span> = Bonferroni’s CV</p>
+<p>g = <span class="math inline">\(\frac{a(a-1)}{2} = \frac{4(3)}{2}\)</span> = 6</p>
+<p>1-(0.05/12)</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(.<span class="dv">9958</span>,<span class="dv">12</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.14839</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(\hat{L} \pm B * \sqrt{\hat{V}(\hat{L})} = 37.25 \pm (3.148 * \sqrt{6412.85}) = 37.25 \pm 252.124\)</span></p>
+<p>(-214.874, 289.374)</p>
+<p><strong>Scheffe’s</strong></p>
+<p><span class="math inline">\(\sqrt{(a-1)f_{(1-\alpha),(a-1),df_{error}}}\)</span> = Scheffe’s CV</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qf</span>(<span class="fl">0.95</span>, <span class="dv">3</span>, <span class="dv">12</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.490295</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(\sqrt{3*3.49}\)</span> = 3.236</p>
+<p><span class="math inline">\(\hat{L} \pm S * \sqrt{\hat{V}(\hat{L})} = 37.25 \pm (3.236*\sqrt{6412.85}) = 37.25 \pm 259.130\)</span></p>
+<p>(-221.880, 296.380)</p>
+<p><strong>e.</strong> Compute Bonferroni’s Minimum Significant Difference</p>
+<p><span class="math inline">\(t_{(1-\frac{\alpha}{2*g}), df_{error}}\)</span> = Bonferroni’s CV</p>
+<p>g = <span class="math inline">\(\frac{a(a-1)}{2} = \frac{4(3)}{2}\)</span> = 6 <span class="math inline">\(1-\frac{0.05}{2*6}\)</span> = 1 - .0042 = .9958</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(.<span class="dv">9958</span>, <span class="dv">12</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.14839</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(B_{CV} * \sqrt{\hat{V}(\hat{L})\)</span> = 3.14839 * 80.08 = 252.124</p>
+<p><strong>f.</strong> Compute Tukey’s Honest Significant Difference</p>
+<p><span class="math inline">\(qtukey_{1-\alpha, df_{btwn}, df_{error}}\)</span> = Tukey’s CV</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qtukey</span>(<span class="fl">0.95</span>, <span class="dv">3</span>, <span class="dv">12</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.772929</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(3.772929 \div \sqrt{2}\)</span> = 2.668</p>
+<p><span class="math inline">\(Tukey_{CV} * \sqrt{\hat{V}(\hat{L})\)</span> = 2.668 * 80.08 = 213.647</p>
+<p><strong>g.</strong> Compute Scheffe’s Minimum Significant Difference</p>
+<p><span class="math inline">\(\sqrt{(a-1)f_{(1-\alpha),(a-1),df_{error}}}\)</span> = Scheffe’s CV</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qf</span>(<span class="fl">0.95</span>,<span class="dv">3</span>,<span class="dv">12</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.490295</code></pre>
+</div>
+</div>
+<p>S = <span class="math inline">\(\sqrt{3*3.490295}\)</span> = 3.236</p>
+<p><span class="math inline">\(S_{CV} * \sqrt{\hat{V}(\hat{L})\)</span> 3.236 * 80.08 = 259.130</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
