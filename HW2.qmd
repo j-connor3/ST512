@@ -305,3 +305,106 @@ $L_3 = \mu_3 - \mu_4$
 $\hat{L}_3 = 16 - 14.4$ = 1.6
 $sd(\hat{L}_3) = \sqrt{196 * (\frac{1^2}{20} +\frac{1^2}{20})}$ = 4.427
 
+## Problem 4
+An article in Environment International (Vol. 18, No. 4, 1992) describes an experiment in which the amount of radon released in showers was investigated. Radon enriched water was used in the experiment and six different Orifice diameters were tested in shower heads. The data from the experiment are shown in the following table.
+ 
+```{r}
+radon_release<-c(80,83,83,85,75,75,79,79,74,73,76,77,67,72,74,74,62,62,67,69,60,61,64,66)
+diameter<-c(rep("0.37",4),rep("0.51",4),rep("0.71",4),rep("1.02",4),rep("1.40",4),rep("1.99",4))
+radon_data<-data.frame(radon_release,diameter)
+radon_data
+str(radon_data)
+
+```
+
+
+**a.**	Write a suitable model (Factor effects) for this experiment. Define all terms in the model. Include all assumptions of the model.
+
+$Y_{ij} = \mu + \alpha_i + \epsilon_{ij}$
+
+Where $\mu$ is population mean
+
+$\alpha_i$ is the treatment effect of the ith group
+
+$\mu + \alpha_i = \mu_i$ is the mean of the ith group
+
+$i$ is the number of treatments, 1-6
+
+$j$ is the number of observations within each treatment, 1-4
+
+$\epsilon_{ij}$ is the random error
+
+Assumptions:
+
+- All observations are independent from one another
+
+- The population is approximately normally distributed
+
+- Constant variance
+
+**b.**	Obtain point estimates and standard deviation of the radon released at each level.
+
+```{r}
+radon_data |>
+  group_by(diameter) |>
+  summarize(point_estimate = mean(radon_release), sd = sd(radon_release))
+```
+
+
+**c.**	Does the size of the orifice affect the mean percentage of radon released? Use α = 0.05
+
+$H_0: \mu_1 = \mu_2 = \mu_3 = \mu_4 = \mu_5 = \mu_6$
+
+$H_a$: at least one $\mu$ is different from the rest
+
+```{r}
+ano_mod <- aov(radon_release ~ diameter, data = radon_data)
+summary(ano_mod)
+```
+With a p-value of 3.16e-08 which is less than the alpha of 0.05, we reject the null hypothesis and have strong evidence to support the alternative, that the size of the orifice does affect the mean percentage of radon release.
+
+**d.**	Construct a normal probability plot of the residuals. What conclusion would you draw about the validity of the normality assumption?
+
+```{r}
+norm <- lm(radon_release ~ diameter, data = radon_data)
+
+plot(norm, which = c(2), sub.caption = "Problem 4D Jackson Connor")
+```
+Based on the QQplot above, we can see that the observations mostly follow the red line with no dramatic outliers, indicating linearity and that normality has been met.
+
+**e.**	Plot the residuals versus the predicted radon release. Comment on the plot.
+
+```{r}
+norm <- lm(radon_release ~ diameter, data = radon_data)
+
+plot(norm, which = c(1), sub.caption = "Problem 4E Jackson Connor")
+```
+The observations are randomly distributed around the red line with no obvious pattern, indicating that constant variance assumption has been met.
+
+**f.**	Test by means of the Modified Leven’s (Brown-Forsythe) and Bartlett’s test whether the treatment error variances for the response variable are equal.
+
+```{r}
+#Bartlett
+
+bartlett.test(radon_release ~ diameter, data = radon_data)
+```
+```{r}
+#Modified Levene's
+
+leveneTest(radon_release ~ diameter, data = radon_data, center = median)
+
+```
+As both the Bartlett and Modified Levene's tests had p-values greater than 0.05 (0.8733 and 0.5261 respectively) we can assume equal variance.
+
+**g.**	Test the normality assumption using Shapiro-Wilk test.
+
+```{r}
+resid <- residuals(ano_mod)
+
+shapiro.test(resid)
+```
+As our p-value is greater than 0.05 (0.1247>0.05), we can assume that the residuals follow an approximately normal distribution.
+
+**h.**	Use the Tukey’s and Bonferroni’s methods to make comparisons among the five treatments to determine specifically which treatments differ in radon release.
+
+
