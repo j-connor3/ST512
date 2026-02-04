@@ -42,20 +42,97 @@ model1 <- aov(Observations ~ Dosage)
 summary(model1)
 ```
 
-Is there evidence to indicate that dosage level affects bioactivity?
+**a.** Is there evidence to indicate that dosage level affects bioactivity?
 
-Compute a 95 percent interval estimate of the mean of dosage level is 30g.
+A p-value of 0.0145 \< 0.05 supports the claim that dosage level affects bioactivity
 
-Compute a 99 percent interval estimate of the mean difference between dosages levels 20g and 40g.
+**b.** Compute a 95 percent interval estimate of the mean of dosage level is 30g.
 
-Compute simultaneous 95% CIs for the difference in means for dosage levels 20g and 40g, based on Tukey’s, Bonferroni’s and Scheffe’s Methods:
-
-```         
-
-Note: Q=q\_((1-α), a,(n_T-a))/√2=q\_(0.95, 4,(3\*4-3))/√2=3.95/√2=2.79
+```{r}
+data1 |>
+  group_by(Dosage) |>
+  summarize(mean = mean(Observations))
 ```
 
-Use Tukey’s HSD to compare pairs of treatment means.
+$\hat{L} = \frac{37+44+31+35}{4}$ = 36.75
+
+$\hat{V}(\hat{L}) = \sqrt{MSE*\sum\limits_{i=1}^a\frac{C^2_i}{n_i}}$
+
+$\sum\limits_{i=1}^a\frac{C^2_i}{n_i} = \frac{1}{4}$
+
+```{r}
+qt(0.975,9)
+```
+
+36.75 $\pm (CV * \sqrt{MSE*\sum\limits_{i=1}^a\frac{C^2_i}{n_i}}) = 36.75 \pm (2.262 * \sqrt{32*\frac{1}{4}})$ = 36.75 $\pm$ 6.3979
+
+(30.352, 43.148)
+
+**c.** Compute a 99 percent interval estimate of the mean difference between dosages levels 20g and 40g.
+
+$\hat{L} = \frac{24+28+37+30}{4}-\frac{42+47+52+38}{4} = 29.75-44.75 = -15$
+
+$\sum\limits_{i=1}^a\frac{C^2_i}{n_i} = \frac{1}{4}+\frac{1}{4} = \frac{2}{4}$
+
+```{r}
+qt(0.995,9)
+```
+
+$-15 \pm (3.2498*\sqrt{32*\frac{2}{4}}) = -15 \pm 12.9992$
+
+(-27.9992, -2.0008)
+
+**d.** Compute simultaneous 95% CIs for the difference in means for dosage levels 20g and 40g, based on Tukey’s, Bonferroni’s and Scheffe’s Methods:
+
+**Bonferroni**
+
+$t_{(1-\frac{\alpha}{2*g}), df_{error}}$ = Bonferroni's CV
+
+g = $\frac{a(a-1)}{2} = \frac{3(2)}{2}$ = 3
+
+```{r}
+qt(1-(0.05/(2*3)), 9)
+```
+
+$\hat{L}\pm B*\sqrt{\hat{V}(\hat{L})}$ = -15 $\pm (2.933*\sqrt{16}) = -15 \pm 11.732$
+
+(-26.732, -3.268)
+
+**Tukey's**
+
+```{r}
+qtukey(0.95, 3, 9)
+```
+
+Q = 3.948/$\sqrt{2}$ = 2.792
+
+$HSD = Q*\sqrt{MSE(\frac{1}{n_i}+\frac{1}{n_j})} = 2.792 * \sqrt{16} = 11.167$
+
+$\hat{L}\pm HSD = -15 \pm 11.167$
+
+(-26.167, -3.833)
+
+**Scheffe**
+
+$\sqrt{(a-1)f_{(1-\alpha),(a-1),df_{error}}}$ = Scheffe's CV
+
+```{r}
+qf(0.95, 2, 9)
+```
+
+$\sqrt{2*4.256}$ = 2.918
+
+\$\hat{L} \pm S \* \sqrt{\hat{V}(\hat{L})} = -15 \pm (2.918 \* \sqrt{16}) = -15 \pm 11.672
+
+(-26.672, -3.328)
+
+**e.** Use Tukey’s HSD to compare pairs of treatment means.
+
+|                           | Difference | Significant (\>HSD of 11.167) |
+|---------------------------|------------|-------------------------------|
+| 20g-30g = \|29.75-36.75\| | 7          | N                             |
+| 20g-40g = \|29.75-44.75\| | 15         | Y                             |
+| 30g-40g = \|36.75-44.75\| | 8          | N                             |
 
 ## Problem 2
 
