@@ -1,0 +1,36 @@
+---
+title: "HW3"
+author: "Jackson Connor"
+format: html
+editor: visual
+---
+
+## Problem 1
+A regression analysis relating test scores (Y) to training hours (X) produced the following fitted equation: y ̂=25-0.5x.
+
+**a.** What is the fitted value of the response variable corresponding to x = 7?
+
+$\hat{y} = 25-0.5(7) = 21.5$
+
+**b.** What is the residual corresponding to the data point with x = 3 and y = 30?  Is the point above or below the line? Why?
+
+$\hat{y} = 25-0.5x = 25-0.5(3) = 23.5$
+
+residual = $e_i = y_i - \hat{y}_i = 30-23.5 = 6.5$
+
+The residual corresponding to the data point is above the line since the calculated residual is a positive value.
+
+**c.** If x increases 3 units, how does y ̂ change?
+
+For each one unit increase of x, y decreases by 0.5; so, for a 3 unit increase of x, y would decrease 1.5 units.
+
+**d.** An additional test score is to be obtained for a new observation at x = 6. Would the test score for the new observation necessarily be 22? Explain.
+
+The test score would not necessarily be 22 as the model is used to estimate values and built on a sample set of observations. If you used the model to estimate a value, it would be 22, however the actual value of the observation may differ slightly.
+
+**e.** The error sums of squares (SSE) for this model were found to be 7. If there were n = 16 observations, provide the best estimate for σ^2.
+
+$\hat{\sigma}^2 = MSE = \frac{SSE}{(n-p)} = \frac{7}{16-1} = \frac{7}{15} = 0.467$
+
+## Problem 2
+
