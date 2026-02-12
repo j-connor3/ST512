@@ -6,13 +6,14 @@ editor: visual
 ---
 
 ## Problem 1
+
 A regression analysis relating test scores (Y) to training hours (X) produced the following fitted equation: y ̂=25-0.5x.
 
 **a.** What is the fitted value of the response variable corresponding to x = 7?
 
 $\hat{y} = 25-0.5(7) = 21.5$
 
-**b.** What is the residual corresponding to the data point with x = 3 and y = 30?  Is the point above or below the line? Why?
+**b.** What is the residual corresponding to the data point with x = 3 and y = 30? Is the point above or below the line? Why?
 
 $\hat{y} = 25-0.5x = 25-0.5(3) = 23.5$
 
@@ -28,9 +29,55 @@ For each one unit increase of x, y decreases by 0.5; so, for a 3 unit increase o
 
 The test score would not necessarily be 22 as the model is used to estimate values and built on a sample set of observations. If you used the model to estimate a value, it would be 22, however the actual value of the observation may differ slightly.
 
-**e.** The error sums of squares (SSE) for this model were found to be 7. If there were n = 16 observations, provide the best estimate for σ^2.
+**e.** The error sums of squares (SSE) for this model were found to be 7. If there were n = 16 observations, provide the best estimate for σ\^2.
 
 $\hat{\sigma}^2 = MSE = \frac{SSE}{(n-p)} = \frac{7}{16-1} = \frac{7}{15} = 0.467$
 
 ## Problem 2
+
+The dataset "Healthy Breakfast" contains, among other variables, the Consumer Reports ratings of 77 cereals and the number of grams of sugar contained in each serving. Considering "Sugars" as the explanatory variable and "Rating" as the response variable generated the following fitted regression equation:
+
+(rating) ̂=59.3-2.40\*sugars
+
+The "Analysis of Variance" partial portion of the R output is shown below.
+
+| Source     | DF     | SS         | MS         | F           | P            |
+|------------|--------|------------|------------|-------------|--------------|
+| Regression | **1**  | 8654.7     | 8654.7     | **102.348** | **1.11e-15** |
+| Error      | **75** | **6342.1** | **84.561** |             |              |
+| Total      | **76** | 14996.8    |            |             |              |
+
+**a.** Find the missing values.
+
+$df_{reg} = 2-1 = 1$
+
+$df_{error} = 77-2 = 75$
+
+$df-{total} = 75+1 = 76$
+
+SSE = SST - SSR = 14996.8 - 8654.7 = 6342.1
+
+MSE = $\frac{SSE}{n-p} = \frac{6342.1}{75} = 84.561$
+
+F = $\frac{MSR}{MSE} = \frac{8654.7}{84.561} = 102.348$
+
+```{r}
+1-pf(102.348, 1, 75)
+```
+
+**b\.** Find $R^2$ value and interpret that number.
+
+$R^2 = \frac{SSR}{SST} = \frac{8654.7}{14996.8} = 0.577$
+
+The $R^2$ value is a percentage of how well the linear model fits the spread of data. A value of 0.577, or 57.7%, means that the model fits the data fairly well.
+
+**c\.** What is the estimated value of $\sigma^2$?
+
+$\sigma^2 = MSE = 84.561$
+
+**d\.** Test $H_0: \beta_1 = 0$ against $H_a:\beta_1 \ne 0$ using F-test
+
+1.11e-15 \< 0.05, therefore we reject the null hypothesis and have strong evidence to conclude the alternative that $\beta_1 \neq 0$.
+
+## Problem 3
 
