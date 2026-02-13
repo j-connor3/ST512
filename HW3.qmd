@@ -169,7 +169,8 @@ There is a weak positive correlation between ACT score and student GPA.
 gpa_data |>
   ggplot(aes(x = ACT, y = GPA)) +
   geom_point() +
-  geom_smooth(method = lm, se = FALSE)
+  geom_smooth(method = lm, se = FALSE) +
+  labs(title = "ACT score compared to GPA", caption = "Jackson Connor")
 ```
 Yes, this relationship is approximately linear.
 	
@@ -235,3 +236,45 @@ $sd(\hat{y}_{pred}) = \sqrt{mse + (sd(\hat{y}_i))^2} = \sqrt{0.6231^2 + 0.0708^2
 We would expect the true GPA of a student who scored a 28 on the ACT to be between 1.96 and 4.44.
 
 ## Problem 5
+
+A medical study was conducted to study the relationship between infants’ systolic blood pressure and two explanatory variables, weight (kgm) and age (days). The portion of data for 25 infants are shown here.
+
+```{r}
+age <- c(3, 4, 5, 6, 3, 4, 5, 6, 3, 4, 5, 6, 3, 4, 5, 6, 3, 4, 5, 6, 3, 4, 5, 6, 6) 
+weight <- c(2.61, 2.67, 2.98, 3.98, 2.87, 3.41, 3.49, 4.03, 3.41, 2.81, 3.24, 3.75, 3.18, 3.13, 3.98, 4.55, 3.41, 3.35, 3.75, 3.83, 3.18, 3.52, 3.49, 3.81, 4.03) 
+systolic_BP <- c(80, 90, 96, 102, 81, 96, 99, 110, 88, 90, 100, 102, 86, 93, 101, 103, 86, 91, 100, 105, 84, 91, 95, 104, 107) 
+data <- data.frame(age, weight, systolic_BP)
+
+```
+
+**a.** Write a first-order multiple regression model relating Systolic BP to Age and Weight.
+
+Systolic BP = $\beta_0 + \beta_1*age + \beta_2*weight$
+
+**b.** Fit Multiple linear regression models to these data and obtain the estimated regression equation.
+
+```{r}
+sbp <- lm(systolic_BP ~ age + weight)
+summary(sbp)
+```
+equation: $\hat{y}$ = 57.26 + 5.80(age) + 3.32(weight)
+
+**c.** Obtain the estimated residual standard deviation.
+
+s = 2.454
+	
+**d.** Provide an interpretation of β ̂_2, the coefficient of weight.
+
+Holding age constant, for each increase in weight, systolic blood pressure rises by 3.32.
+	
+**e.** Can the hypothesis of no overall predictive value of the model be rejected at the α = 0.01 level?
+
+$H_0: \beta_1 = \beta_2 = 0$
+
+$H_a$: at least one $\beta$ is not equal to zero
+
+p-value = 8.696e-13
+
+8.696e-13 < 0.01
+
+Therefore, we can reject the hypothesis that there is no overall predictive value of the model and have strong evidence to conclude that the model does have overall predictive value.
