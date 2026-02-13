@@ -69,7 +69,7 @@ F = $\frac{MSR}{MSE} = \frac{8654.7}{84.561} = 102.348$
 
 $R^2 = \frac{SSR}{SST} = \frac{8654.7}{14996.8} = 0.577$
 
-The $R^2$ value is a percentage of how well the linear model fits the spread of data. A value of 0.577, or 57.7%, means that the model fits the data fairly well.
+57.7% of variation in the ratings is due to the sugars in the cereal.
 
 **c\.** What is the estimated value of $\sigma^2$?
 
@@ -77,7 +77,51 @@ $\sigma^2 = MSE = 84.561$
 
 **d\.** Test $H_0: \beta_1 = 0$ against $H_a:\beta_1 \ne 0$ using F-test
 
-1.11e-15 \< 0.05, therefore we reject the null hypothesis and have strong evidence to conclude the alternative that $\beta_1 \neq 0$.
+1.11e-15 \< 0.05, therefore we reject the null hypothesis and have strong evidence to conclude the alternative that $\beta_1 \neq 0$, ie that there is a strong linear relationship.
 
 ## Problem 3
+Athletes are constantly seeking measures of the degree of their cardiovascular fitness prior to a major race. Athletes want to know when their training is at a level that will produce a peak performance. One such measure of fitness is the time to exhaustion from running on a treadmill at a specified angle and speed. The important question is then “Does this measure of cardiovascular fitness translate into performance in a 10-km running race?” Twenty experienced distance runners who professed to be in top condition were evaluated on the treadmill and then
+had their times recorded in a 10-km race.
 
+
+You are provided with the following information:
+
+β^_0=b_0=58.816,β^_1=b_1=-1.867,s(b_1 )=0.346,MSE=4.417
+
+
+**a.** Test the hypothesis that there is a linear relationship between the amount of time needed to run a 10-km race and the time to exhaustion on a treadmill.
+
+$H_0: \beta_1 = 0$
+
+$H_a: \beta_1 \neq 0$
+
+$t* = \frac{b_1-0}{s{b_1}} = \frac{-1.867}{0.346} = -5.396$
+
+```{r}
+2*(1-pt(5.396, 18))
+```
+3.972e-05 < 0.05, so we reject our null that $\beta_1$ is equal to 0 and have strong evidence to conclude there is a linear relationship between the amount of time needed to run a 10km race and the time to exhaustion on a treadmill.
+
+**b.** Construct a 95% confidence interval for β1.
+
+$\hat{\beta}_1 \pm t_{1-\frac{\alpha}{2},df_{error}}*sd(\hat{\beta}_1)$ = -1.867 $\pm$ (2.101*0.346)
+
+```{r}
+qt(.975, 18)
+```
+(-2.59, -1.14)
+
+**c.** Construct a 95% confidence interval for the estimated mean 10-km race when the treadmill time is 10 minutes. Given that sd{y ̂_(x_h=10)}=0.7342
+
+Point Estimate: $y(10) = 58.816 + (-)1.867(10) = 40.146
+
+40.146 $\pm$ 2.101(0.7324)
+
+(38.60, 41.69)
+
+
+**d.** Construct a 95% prediction interval for an athlete whose treadmill time is 10 minutes. sd(y ̂_pred )=√(mse+(sd{y ̂_(x_h=10)})^2 )=2.226
+
+40.146 $\pm$ 2.101(2.226)
+
+(35.47, 44.82)
