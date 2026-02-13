@@ -4,6 +4,13 @@ author: "Jackson Connor"
 format: html
 editor: visual
 ---
+## Packages
+
+```{r}
+#| message: false
+#| warning: false
+library(tidyverse)
+```
 
 ## Problem 1
 
@@ -125,3 +132,106 @@ Point Estimate: $y(10) = 58.816 + (-)1.867(10) = 40.146
 40.146 $\pm$ 2.101(2.226)
 
 (35.47, 44.82)
+
+## Problem 4
+
+The director of admissions of a small college selected 120 students at random from the new freshman class in a study to determine whether a student's grade point average (GPA) at the end of the freshman year (Y) can be predicted from the ACT test score (X). The results of the study follow. Assume that first-order regression model Y_i=β_0+β_1*X_i+ε_i is appropriate.
+
+```{r}
+gpa_data<-read.table(file.choose(), header=T)
+
+names(gpa_data)
+head(gpa_data)
+tail(gpa_data)
+attach(gpa_data)
+```
+
+
+**a.** Compute the mean and variance of ACT test score and GPA.
+
+```{r}
+gpa_data |>
+  summarise(mean_GPA = mean(GPA), var_GPA = var(GPA), mean_ACT = mean(ACT), var_ACT = var(ACT))
+```
+
+
+**b.** Compute the correlation between ACT test score and GPA. Comment on the strength and direction of the linear relationship between the variables.
+
+```{r}
+gpa_data |>
+  summarize(correlation = cor(ACT, GPA))
+```
+There is a weak positive correlation between ACT score and student GPA.
+	
+**c.** Construct a scatter plot. Is the relationship approximately linear?
+
+```{r}
+gpa_data |>
+  ggplot(aes(x = ACT, y = GPA)) +
+  geom_point() +
+  geom_smooth(method = lm, se = FALSE)
+```
+Yes, this relationship is approximately linear.
+	
+**d.** Run a linear regression to predict GPA based on the ACT score. Give the regression equation.
+
+```{r}
+gpalm <- lm(GPA ~ ACT, data = gpa_data)
+summary(gpalm)
+```
+The regression equation is: $\hat{y}$ = 2.11 + 0.039*ACT
+	
+**e.** What is the point estimate of the change in the mean response when the entrance test score increases by one point? And increases by 4 points?
+
+When the test score increases by 1 point, the point estimate will increase by 0.039 points. When the test score increases by 4 points, the point estimate will increase by 0.039(4) = .156 points.
+	
+**f.** Based on your answer in (e), predict the GPA of a student who scored 20 on the ACT.
+
+$\hat{y}(20)$ = 2.11 + 0.039(20) = 2.89
+	
+**g.** Estimate σ^2 and σ
+
+$\sigma$ = 0.6231
+
+$\sigma^2 = 0.6231^2$ = 0.3883
+	
+**h.** Give a point estimate and 95% confidence interval for the slope and interpret each of these in words.
+
+PE: 0.039, which is the GPA increase we could expect with every one increase in ACT score.
+
+0.039 $\pm$ 1.980272(0.01277)
+
+```{r}
+qt(0.975, 118)
+```
+
+```{r}
+confint(gpalm, "ACT", 0.95)
+```
+We would expect the true value of increase for each point increase in ACT score to be between (0.0135, 0.0641).
+	
+**i.** Obtain a 95% interval estimate of the mean GPA for students whose ACT test score is 28. Interpret your confidence interval.
+
+$\hat{y}(28)$ = 2.11 + 0.039(28) = 3.202
+
+$S_{xx} = (\frac{s}{se{\beta_1}})^2 = (\frac{0.6231}{.01277})^2 = 2380.86$
+
+$sd(\hat{y}_i) = s\sqrt{\frac{1}{n}+\frac{(x_i-\bar{x})^2}{S_{xx}}} = 0.6231\sqrt{\frac{1}{120}+\frac{28+24.7}{2380.86}} = 0.0708$
+
+3.202 $\pm$ 1.980272(0.0708)
+
+(3.06, 3.34)
+
+We would expect that the true mean GPA for students who scored a 28 on the ACT is between 3.06 and 3.34.
+	
+**j.** Predict GPA using a 95% prediction interval for students whose ACT test score is 28.
+
+$sd(\hat{y}_{pred}) = \sqrt{mse + (sd(\hat{y}_i))^2} = \sqrt{0.6231^2 + 0.0708^2} = 0.6271$
+
+3.202 $\pm$ 1.980272(0.6271)
+
+(1.96, 4.44)
+
+We would expect the true GPA of a student who scored a 28 on the ACT to be between 1.96 and 4.44.
+
+## Problem 5
