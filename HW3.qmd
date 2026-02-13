@@ -1,7 +1,7 @@
 ---
 title: "HW3"
 author: "Jackson Connor"
-format: html
+format: pdf
 editor: visual
 ---
 ## Packages
@@ -36,7 +36,7 @@ For each one unit increase of x, y decreases by 0.5; so, for a 3 unit increase o
 
 The test score would not necessarily be 22 as the model is used to estimate values and built on a sample set of observations. If you used the model to estimate a value, it would be 22, however the actual value of the observation may differ slightly.
 
-**e.** The error sums of squares (SSE) for this model were found to be 7. If there were n = 16 observations, provide the best estimate for σ\^2.
+**e.** The error sums of squares (SSE) for this model were found to be 7. If there were n = 16 observations, provide the best estimate for $\sigma^2$.
 
 $\hat{\sigma}^2 = MSE = \frac{SSE}{(n-p)} = \frac{7}{16-1} = \frac{7}{15} = 0.467$
 
@@ -151,7 +151,8 @@ attach(gpa_data)
 
 ```{r}
 gpa_data |>
-  summarise(mean_GPA = mean(GPA), var_GPA = var(GPA), mean_ACT = mean(ACT), var_ACT = var(ACT))
+  summarise(mean_GPA = mean(GPA), var_GPA = var(GPA),
+            mean_ACT = mean(ACT), var_ACT = var(ACT))
 ```
 
 
@@ -184,17 +185,19 @@ The regression equation is: $\hat{y}$ = 2.11 + 0.039*ACT
 	
 **e.** What is the point estimate of the change in the mean response when the entrance test score increases by one point? And increases by 4 points?
 
-When the test score increases by 1 point, the point estimate will increase by 0.039 points. When the test score increases by 4 points, the point estimate will increase by 0.039(4) = .156 points.
+Increase by one point: $\hat{y}$ = 2.11 + 0.039*1 = 2.149, with a 0.039 increase for each one increase in test score.
+
+Increase by four points: $\hat{y}$ = 2.11 + 0.039*4 = 2.266, with a .156 increase for each four point increase in test score.
 	
 **f.** Based on your answer in (e), predict the GPA of a student who scored 20 on the ACT.
 
 $\hat{y}(20)$ = 2.11 + 0.039(20) = 2.89
 	
-**g.** Estimate σ^2 and σ
+**g.** Estimate $\sigma^2$ and $\sigma$
 
-$\sigma$ = 0.6231
+$\hat{\sigma}$ = 0.6231
 
-$\sigma^2 = 0.6231^2$ = 0.3883
+$\hat{\sigma^2} = 0.6231^2$ = 0.3883
 	
 **h.** Give a point estimate and 95% confidence interval for the slope and interpret each of these in words.
 
@@ -240,9 +243,13 @@ We would expect the true GPA of a student who scored a 28 on the ACT to be betwe
 A medical study was conducted to study the relationship between infants’ systolic blood pressure and two explanatory variables, weight (kgm) and age (days). The portion of data for 25 infants are shown here.
 
 ```{r}
-age <- c(3, 4, 5, 6, 3, 4, 5, 6, 3, 4, 5, 6, 3, 4, 5, 6, 3, 4, 5, 6, 3, 4, 5, 6, 6) 
-weight <- c(2.61, 2.67, 2.98, 3.98, 2.87, 3.41, 3.49, 4.03, 3.41, 2.81, 3.24, 3.75, 3.18, 3.13, 3.98, 4.55, 3.41, 3.35, 3.75, 3.83, 3.18, 3.52, 3.49, 3.81, 4.03) 
-systolic_BP <- c(80, 90, 96, 102, 81, 96, 99, 110, 88, 90, 100, 102, 86, 93, 101, 103, 86, 91, 100, 105, 84, 91, 95, 104, 107) 
+age <- c(3, 4, 5, 6, 3, 4, 5, 6, 3, 4, 5, 6, 3, 4, 5, 6, 3, 4, 5, 6, 3, 4, 5,
+         6, 6) 
+weight <- c(2.61, 2.67, 2.98, 3.98, 2.87, 3.41, 3.49, 4.03, 3.41, 2.81, 3.24, 
+            3.75, 3.18, 3.13, 3.98, 4.55, 3.41, 3.35, 3.75, 3.83, 3.18, 3.52, 
+            3.49, 3.81, 4.03) 
+systolic_BP <- c(80, 90, 96, 102, 81, 96, 99, 110, 88, 90, 100, 102, 86, 93, 
+                 101, 103, 86, 91, 100, 105, 84, 91, 95, 104, 107) 
 data <- data.frame(age, weight, systolic_BP)
 
 ```
@@ -261,9 +268,9 @@ equation: $\hat{y}$ = 57.26 + 5.80(age) + 3.32(weight)
 
 **c.** Obtain the estimated residual standard deviation.
 
-s = 2.454
+residual standard deviation = 2.454
 	
-**d.** Provide an interpretation of β ̂_2, the coefficient of weight.
+**d.** Provide an interpretation of $\beta_2$, the coefficient of weight.
 
 Holding age constant, for each increase in weight, systolic blood pressure rises by 3.32.
 	
